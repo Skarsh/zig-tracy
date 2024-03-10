@@ -1,0 +1,4 @@
+
+# Zig build directories
+zig-cache/
+zig-out/
