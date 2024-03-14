@@ -9,6 +9,13 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    const install_dir = std.Build.Step.InstallArtifact.Options.Dir{ .override = .{ .bin = {} } };
+    const install_tracy = b.addInstallArtifact(tracy.artifact("tracy"), .{
+        .dest_dir = install_dir,
+        .pdb_dir = install_dir,
+    });
+    b.getInstallStep().dependOn(&install_tracy.step);
+
     const exe = b.addExecutable(.{
         .name = "tracy-example",
         .root_source_file = .{ .path = "src/main.zig" },
